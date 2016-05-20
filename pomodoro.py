@@ -63,6 +63,10 @@ def pause():
 	tomatoCount =  tomatoCount + 1
 	start(numPixels=5, start_color=blue, done_color=red)
 
+def stop():
+    s = Strip().strip
+    colorWipe(s, Color(1,1,1))
+
 # Set strip brightness
 def setBrightness(b):
 	global s

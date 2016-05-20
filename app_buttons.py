@@ -1,10 +1,11 @@
 import sys
 import RPi.GPIO as GPIO
 import time
-import web as web
+import app 
 import gaugette.rotary_encoder
-import strip as strip
+import strip
 import subprocess
+import strip
 
 A_PIN = 7
 B_PIN = 9
@@ -26,7 +27,7 @@ GPIO.setup(stop_gpio, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 print('Started...')
 GPIO.setup(led_gpio, GPIO.OUT)
 GPIO.output(led_gpio, 1)
-
+strip.Strip().strip.setBrightness(10)
 try:
 	while True:
 #		delta = encoder.get_delta()
@@ -40,16 +41,15 @@ try:
 		stop = GPIO.input(stop_gpio)
 		if start == False:
 			print('button pressed')
-			web.startStrip()
+			app.startStrip()
 			time.sleep(0.2)	
-			strip.setBrightness(10)
 		if pause == False:
 			print('button pressed')
-			web.pauseStrip()
+			app.pauseStrip()
 			time.sleep(0.2)
 		if stop == False:
 			print('button pressed')
-			web.demoStrip()
+			app.demoStrip()
 			time.sleep(0.2)
 #		halt = GPIO.input(halt_gpio)
 		halt = True
@@ -63,8 +63,9 @@ except KeyboardInterrupt:
 	print "Keyboard interrupt"
 	raise	
 finally :
-	print "stopping..."
-	GPIO.output(led_gpio, 0)
-	web.stopStrip()
-	GPIO.cleanup()
-	sys.exit(0)
+    print "stopping..."
+    GPIO.output(led_gpio, 0)
+    app.stopStrip()
+    time.sleep(5)
+    GPIO.cleanup()
+    sys.exit(0)
