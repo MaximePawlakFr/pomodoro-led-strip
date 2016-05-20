@@ -1,0 +1,73 @@
+<!doctype html>
+
+<html>
+	<head>
+<title>Pomodoro Strip</title>
+	</head>
+	<body>
+
+		<a href="/">Index</a>
+		<a href="/start">Start</a>
+		<a href="/pause">Pause</a>
+		<a href="/stop">Stop</a>
+		<a href="/shutdown">Shutdown</a>
+<p id="s">Salut</p>
+<button id="start">Start</button>
+<button id="stop">Stop</button>
+<button id="pause">Pause</button>
+<h2>Tomato Count: {{ tomatoCount }}</h2>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			var url = 'http://'+document.domain+':'+location.port;
+			console.log(url)
+			var socket = io.connect(url);
+			socket.on('connect', function() {
+				console.log('on connect');
+			});
+			var intervalId = null;
+
+			socket.on('pomodoro_started', function(data){
+				console.log('start_pomodor');
+				var start = data.date;
+				console.log('start_date: ', start);
+				window.clearInterval(intervalId);
+				intervalId = window.setInterval(function(){
+					updatePomodoro(start);
+				}, 1000);
+			});
+		
+			socket.on('pomodoro_paused', function(data){
+				console.log('pause_pomodor');
+				var start = data.date;
+				console.log('_date: ', start);
+				window.clearInterval(intervalId);
+				intervalId = window.setInterval(function(){
+					updatePomodoro(start);
+				}, 1000);
+			});
+			function updatePomodoro(date){
+				var now = new Date().getTime()/1000;
+				var diff = parseInt(now - date);
+				document.getElementById('s').innerHTML = diff + "s";
+				
+			}
+
+			var btn = document.getElementById('start');
+			btn.addEventListener("click", function(){
+				console.log('click');
+				socket.emit('start_pomodoro');
+			});
+			var btn = document.getElementById('stop');
+			btn.addEventListener("click", function(){
+				console.log('click-stop');
+				socket.emit('stop_pomodoro');
+			});
+			var btn = document.getElementById('pause');
+			btn.addEventListener("click", function(){
+				console.log('click-pause');
+				socket.emit('pause_pomodoro');
+			});
+		</script>
+	</body>
+
+</html>
