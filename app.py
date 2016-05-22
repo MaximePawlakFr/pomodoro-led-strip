@@ -12,15 +12,17 @@ socketio = SocketIO(app)
 t = None
 
 def checkThread():
-	global t
-	print 'start Strip'
-	if t is not None and t.isAlive():
+    global t
+    print 'start Strip'
+    if t is not None and t.isAlive():
 		print 't is not None'
-		pomodoro.stop = True
+		pomodoro.STOP_FLAG = True
 		t.join()
-	elif t is None:
+    elif t is None:
 		print 't is None'	
-		#strip.init()
+    #strip.init()
+    pomodoro.STOP_FLAG = False
+
 
 def clearStrip():
 	global t
@@ -28,14 +30,17 @@ def clearStrip():
 	t = None
 	return
 
-def startStrip():
-	global t
-	checkThread()
-	print 'strip ready'
-	pomodoro.stop = False
-	t = Thread(target=pomodoro.start)
-	t.start()
-	print 'strip started'
+def startStrip(numPixels=-1):
+    global t
+    checkThread()
+    print 'strip ready'
+    # pomodoro.stop = False
+    if numPixels>0:
+        t = Thread(target=pomodoro.start, args=(numPixels,))
+    else:
+        t = Thread(target=pomodoro.start)
+    t.start()
+    print 'strip started'
 
 def pauseStrip():
 	print 'pause'
