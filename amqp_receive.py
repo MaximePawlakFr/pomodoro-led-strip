@@ -15,7 +15,7 @@ def callback(ch, method, properties, body):
         data = simplejson.loads(body)
         duration = data['duration']
         print duration
-        app.startStrip(numPixels=20)    
+        app.startStrip(numPixels=duration)    
     except KeyboardInterrupt:
         print 'Error'
 

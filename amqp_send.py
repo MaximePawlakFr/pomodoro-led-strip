@@ -7,7 +7,7 @@ channel = connection.channel()
 channel.queue_declare(queue='hello')
 
 data = {
-    'duration':20    
+    'duration':5    
 }
 message = json.dumps(data)
 
