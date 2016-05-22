@@ -19,6 +19,33 @@ blue = Color(0,0,255)
 green = Color(255,0,0)
 red = Color(0,255,0)
 black = Color(0,0,0)
+yellow = Color(255,255,0)
+amber = Color(193,255,7)
+white = Color(255,255,255)
+orange = Color(152,255,0)
+purple = Color(0,255,255)
+
+c0 = purple
+c1 = Color(0,180,255)
+c2 = Color(0,100,255)
+c3 = blue #Color(0,80,255)
+c4 = Color(100,0,180)
+c5 = Color(180,0,100)
+c6 = green#Color(200,0,100)
+c7 = green
+
+setColors = []
+setColors.append(blue)
+setColors.append(Color(50,0,200))
+setColors.append(Color(100,0,150))
+setColors.append(Color(150,0,100))
+setColors.append(Color(200,0,50))
+setColors.append(green)
+
+indigo = Color(81,63,181)
+lightBlue = Color(169,3,244)
+cyan = Color(255,0,212)
+teal = Color(255,0,136)
 
 stop = False
 
@@ -51,7 +78,7 @@ class Strip(object):
 
 
 def blinkPixel(strip, pixel, speed=1000):
-    blinkPixels(strip, [pixel])
+    blinkPixels(strip, [pixel], speed)
 
 # Blink the pixels at the speed param
 def blinkPixels(strip, pixels, speed=1000):

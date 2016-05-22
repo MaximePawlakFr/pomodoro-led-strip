@@ -7,6 +7,7 @@ import time
 from strip import *
 
 tomatoCount = 0
+STOP_FLAG = False
 stop = False
 
 # Init the strip
@@ -27,8 +28,9 @@ def start(numPixels=25, start_color=green, done_color=red,  cycle_duration=60):
     start_date = int(time.time())
 
     pixel = numPixels - 1 # current pixel to blink
-    
-    while not stop and pixel >= 0:
+    print STOP_FLAG
+    print 'pixel '+str(pixel)
+    while not STOP_FLAG and pixel >= 0:
         now = int(time.time())
         diff = (now - start_date)
 
@@ -48,12 +50,12 @@ def start(numPixels=25, start_color=green, done_color=red,  cycle_duration=60):
             break
 
         else:
-            blinkPixel(s, pixel)
+            blinkPixel(s, pixel, 500)
     
     print 'Done.'
 
 	# When done, blink all
-    while not stop:
+    while not STOP_FLAG:
         blinkAll(s)
     return
 
@@ -69,8 +71,8 @@ def stop():
 
 # Set strip brightness
 def setBrightness(b):
-	global s
-	s.setBrightness(b)
+    s = Strip().strip
+    s.setBrightness(b)
 
 # Increment brightness
 def incBrightness(brightness):
